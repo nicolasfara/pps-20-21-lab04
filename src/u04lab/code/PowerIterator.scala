@@ -17,7 +17,7 @@ trait PowerIterator[A] {
 
 object PowerIterator {
   def incremental(start: Int, successive: Int => Int): PowerIterator[Int] = PowerIteratorImpl(Stream.iterate(start)(successive))
-  def fromList[A](list: List[A]): Unit = PowerIteratorImpl(List.stream(list))
+  def fromList[A](list: List[A]): PowerIterator[A] = PowerIteratorImpl(List.stream(list))
   def randomBooleans(size: Int): PowerIterator[Boolean] = PowerIteratorImpl(Stream.take(Stream.generate(new Random().nextBoolean()))(size))
 
   case class PowerIteratorImpl[A](private val stream: Stream[A]) extends PowerIterator[A] {
@@ -44,18 +44,3 @@ object PowerIterator {
   }
 }
 
-trait PowerIteratorsFactory {
-
-  def incremental(start: Int, successive: Int => Int): PowerIterator[Int]
-  def fromList[A](list: List[A])
-  def randomBooleans(size: Int): PowerIterator[Boolean]
-}
-
-class PowerIteratorsFactoryImpl extends PowerIteratorsFactory {
-
-  override def incremental(start: Int, successive: Int => Int): PowerIterator[Int] = ???
-
-  override def fromList[A](list: List[A]): Unit = ???
-
-  override def randomBooleans(size: Int): PowerIterator[Boolean] = ???
-}
