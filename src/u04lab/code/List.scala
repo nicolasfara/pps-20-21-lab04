@@ -1,6 +1,7 @@
 package u04lab.code
 
 import scala.annotation.tailrec
+import u04lab.code.Streams._
 
 object Lists extends App {
 
@@ -88,6 +89,11 @@ object Lists extends App {
       case Cons(_, tail) => contains(tail)(value)
       case _ => false
     }
+
+    def stream[A](l: List[A]): Stream[A] = l match {
+      case Cons(head, tail) => Stream.cons(head, stream(tail))
+      case Cons(_, Nil()) => Stream.Empty()
+    }
   }
 
   // Note "List." qualification
@@ -116,4 +122,5 @@ object Lists extends App {
   println(appendByFold(Cons(3,Cons(7,Nil())), Cons(1,Cons(5,Nil())))) // Cons(3,Cons(7,Cons(1,Cons(5, Nil()))))
   println(length(Nil())) // 0
   println(length(Cons(3,Cons(7,Cons(1,Cons(5, Nil())))))) // 4
+
 }
