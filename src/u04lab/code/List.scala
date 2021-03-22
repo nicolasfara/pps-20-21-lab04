@@ -24,6 +24,7 @@ object Lists extends App {
       case _ => l2
     }
 
+    @tailrec
     def drop[A](l: List[A], n: Int): List[A] = l match {
       case _ if n<=0 || l==Nil() => l
       case Cons(h,t) => drop(t,n-1)
@@ -69,7 +70,14 @@ object Lists extends App {
 
     def appendByFold[A](l1: List[A], l2: List[A]): List[A] = ???
 
-    def length(l: List[_]): Int = ???
+    def length(l: List[_]): Int = {
+      @tailrec
+      def _length(list: List[_], accumulator: Int = 0): Int = list match {
+        case Cons(_, tail) => _length(tail, accumulator + 1)
+        case _ => accumulator
+      }
+      _length(l)
+    }
   }
 
   // Note "List." qualification
