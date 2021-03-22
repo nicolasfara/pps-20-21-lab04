@@ -8,11 +8,10 @@ import org.junit.jupiter.api.Assertions._
 
 class PowerIteratorsTest {
 
-  val factory = new PowerIteratorsFactoryImpl()
 
   @Test
   def testIncremental() {
-    val pi = factory.incremental(5,_+2); // pi produce 5,7,9,11,13,...
+    val pi = PowerIterator.incremental(5, _+2); // pi produce 5,7,9,11,13,...
     assertEquals(Option.of(5), pi.next());
     assertEquals(Option.of(7), pi.next());
     assertEquals(Option.of(9), pi.next());
@@ -22,5 +21,27 @@ class PowerIteratorsTest {
       pi.next(); // procedo in avanti per un po'..
     }
     assertEquals(Option.of(33), pi.next()); // sono arrivato a 33
+  }
+
+  @Test
+  def testFromList(): Unit = {
+    val list = Cons(1, Cons(2, Cons(3, Nil())))
+    val li = PowerIterator.fromList(list)
+
+    assertEquals(Option.of(1), li.next())
+    assertEquals(Option.of(2), li.next())
+
+    assertEquals(Cons(1, Cons(2, Nil())), li.allSoFar())
+  }
+
+  @Test
+  def testRandomBoolean(): Unit = {
+    val rb = PowerIterator.randomBooleans(5)
+    var lst: List[Boolean] = Nil()
+    for (_ <- 0 until 5) {
+      lst = List.append(lst, Cons(Option.getOrElse(rb.next(), false), Nil()))
+    }
+    assertEquals(Option.empty, rb.next())
+    assertEquals(lst, rb.allSoFar())
   }
 }
