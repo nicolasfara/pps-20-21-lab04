@@ -9,31 +9,31 @@ class ComplexTest {
 
   @Test
   def testEquals(): Unit = {
-    assertEquals(a(0), a(0))
+    assertEquals(Complex(10, 10), Complex(10, 10))
   }
 
   @Test
   def testAddComplex(): Unit = {
-    assertEquals(a(0) + a(1), Complex(12, 24))
+    assertEquals(Complex(10, 5) + Complex(5, 1), Complex(15, 6))
   }
 
   @Test
   def testNegativeAdd(): Unit = {
-    assertEquals(a(2) + a(3), Complex(-1, -3))
+    assertEquals(Complex(10, 5) + Complex(-1, -1), Complex(9, 4))
   }
 
   @Test
   def testMultiply(): Unit = {
-    assertEquals(a(0) * a(1), Complex(20, 80))
+    assertEquals(Complex(1, 2) * Complex(1, 1), Complex(-1, 3))
   }
 
   @Test
   def testNegativeMultiply(): Unit = {
-    assertEquals(a(0) * a(3), Complex(-20, -80))
+    assertEquals(Complex(1, 2) * Complex(-1, -1), Complex(1, -3))
   }
 
   @Test
   def testToString(): Unit = {
-    assertEquals(a(0).toString, Complex(10.0, 20.0).toString)
+    assertEquals(Complex(10, 20).toString, Complex(10.0, 20.0).toString)
   }
 }
