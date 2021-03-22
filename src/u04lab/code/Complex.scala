@@ -8,7 +8,13 @@ trait Complex {
 }
 
 object Complex {
-  def apply(re:Double, im:Double):Complex = ??? // Fill here
+  def apply(re:Double, im:Double):Complex = ComplexImpl(re, im) // Fill here
+
+  case class ComplexImpl(override val re: Double, override val im: Double) extends Complex {
+    override def +(c: Complex): Complex = ComplexImpl(re + c.re, im + c.im)
+
+    override def *(c: Complex): Complex = ComplexImpl(re * c.re, im * c.im)
+  }
 }
 
 object TryComplex extends App {
