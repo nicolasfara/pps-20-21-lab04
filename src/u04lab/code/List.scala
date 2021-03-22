@@ -78,6 +78,13 @@ object Lists extends App {
       }
       _length(l)
     }
+
+    @tailrec
+    def contains[A](l : List[A])(value: A): Boolean = l match {
+      case Cons(head, _) if head == value => true
+      case Cons(_, tail) => contains(tail)(value)
+      case _ => false
+    }
   }
 
   // Note "List." qualification

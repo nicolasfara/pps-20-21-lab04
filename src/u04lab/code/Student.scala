@@ -25,10 +25,7 @@ object Student {
 
     override def courses: List[String] = List.map(course)(_.toString)
 
-    override def hasTeacher(teacher: String): Boolean = List.length(List.filter(this.course)(_.teacher == teacher)) match {
-      case n if n > 0 => true
-      case _ => false
-    }
+    override def hasTeacher(teacher: String): Boolean = List.contains(List.map(this.course)(_.teacher))(teacher)
   }
 }
 
