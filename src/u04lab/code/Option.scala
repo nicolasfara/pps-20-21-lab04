@@ -16,6 +16,11 @@ object Optionals extends App {
       case _ => false
     }
 
+    def ifPresent[A](opt: Option[A])(f: A => Unit): Unit = opt match {
+      case Some(a) => f(a)
+      case _ =>
+    }
+
     def getOrElse[A, B >: A](opt: Option[A], orElse: B): B = opt match {
       case Some(a) => a
       case _ => orElse
