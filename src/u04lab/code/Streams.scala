@@ -1,6 +1,10 @@
 package u04lab.code
 
 import scala.util.Random
+import Optionals.Option._
+import Optionals.Option
+
+import scala.annotation.tailrec
 
 object Streams extends App {
   import Lists._
@@ -18,6 +22,18 @@ object Streams extends App {
       Cons(() => head, () => tail)
     }
 
+    def head[A](stream: Stream[A]): Option[A] = stream match {
+      case Cons(head, _) => Some(head())
+      case _ => None()
+    }
+
+    @tailrec
+    def drop[A](stream: Stream[A])(n: Int): Stream[A] = (stream, n) match {
+      case (s, 0) => s
+      case (Cons(_, tl), n) => drop(tl())(n - 1)
+      case _ => Empty()
+    }
+
     def toList[A](stream: Stream[A]): List[A] = stream match {
       case Cons(h,t) => List.Cons(h(), toList(t()))
       case _ => List.Nil()
@@ -29,8 +45,8 @@ object Streams extends App {
     }
 
     def filter[A](stream: Stream[A])(pred: A => Boolean): Stream[A] = stream match {
-      case Cons(head, tail) if (pred(head())) => cons(head(), filter(tail())(pred))
-      case Cons(head, tail) => filter(tail())(pred)
+      case Cons(head, tail) if pred(head()) => cons(head(), filter(tail())(pred))
+      case Cons(_, tail) => filter(tail())(pred)
       case _ => Empty()
     }
 
