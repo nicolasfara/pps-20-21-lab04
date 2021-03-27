@@ -20,7 +20,7 @@ object PowerIterator {
   def fromList[A](list: List[A]): PowerIterator[A] = PowerIteratorImpl(List.stream(list))
   def randomBooleans(size: Int): PowerIterator[Boolean] = PowerIteratorImpl(Stream.take(Stream.generate(new Random().nextBoolean()))(size))
 
-  case class PowerIteratorImpl[A](private val stream: Stream[A]) extends PowerIterator[A] {
+  private case class PowerIteratorImpl[A](private val stream: Stream[A]) extends PowerIterator[A] {
 
     private var pastList: List[A] = List.Nil()
     private var nextIndex = -1
